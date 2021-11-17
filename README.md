@@ -1,14 +1,12 @@
 # React Dev Test Assignment ⚛️
 
-https://user-images.githubusercontent.com/12231393/136546219-a49c6ea7-fd63-48b5-8906-04ce8c04a181.mp4
-
 ## Description
-Finish the TODO's found within the React app. When you view the `/src` folder you will find an application for users that want to create their own addressbook (also shown in the video above). But as mentioned before there are some TODO's to be completed in order to make the application work as expected.
+Try to finish as much TODO's as possible. This test is meant to give us insight in your skills level, so don't stress it if you didn't finish everything. The TODO's are found within the React app codebase. When you view the `/src` folder you will find an application for users that want to create their own addressbook (also shown in the video above). But as mentioned before there are some TODO's to be completed in order to make the application work as expected.
 
 In order to start this assignment you need to:
 - ⬇️ Clone this repository
 - 🌲 Create a separate branch called `feat/todo-assignment`
-- 👨‍💻 Open up your preferred editor (mine is VS Code)
+- 👨‍💻 Open up your preferred editor (mine is VS Code or Intellij Ultimate)
 - 🏃🏻‍♂️ Run `npm install` and then `npm start`
 - 🔎  Search for all `TODO:` strings within the `/src` folder and start building!
 
@@ -37,7 +35,11 @@ Here is a list of all the TODO's to make life a bit easier:
 ## Submitting assignment
 You can submit your assignment by creating a merge request for your `feat/todo-assignment` branch. That's it, good luck! 🚀
 
-> If any questions might arise about the assignment please contact l.zimmerman@wearetriple.com
+> If any questions might arise about the assignment please contact rjaspers@fmgroup.fm
 
+### Author
+Created and designed by Levi Zimmerman from Triple.
+
+Edited by Ramon Jaspers for FM Group
 
 
