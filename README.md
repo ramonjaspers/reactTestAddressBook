@@ -39,7 +39,7 @@ You can submit your assignment by creating a merge request for your `feat/todo-a
 > If any questions might arise about the assignment please contact rjaspers@fmgroup.fm
 
 ### Author
-Created and designed by Levi Zimmerman from Triple.
+Created and designed by Levi Zimmerman from Triple
 
 Edited by Ramon Jaspers for FM Group
 
