@@ -48,7 +48,7 @@ function App() {
 
   const handleLastNameChange = (e) => setLastName(e.target.value);
 
-  const handleSelectedAddressChange = (e) => { setSelectedAddress(localStorage.getItem(e.target.value)) };
+  const handleSelectedAddressChange = (e) => { setSelectedAddress(JSON.parse(localStorage.getItem(e.target.value))[0]) };
 
   const handleAddressSubmit = async (e) => {
     e.preventDefault();
@@ -100,11 +100,11 @@ function App() {
       );
       return;
     }
-
     const foundAddress = addresses.find(
-      (address) => address.id === selectedAddress
+      (address) => address.id === selectedAddress.id
     );
 
+    console.log(foundAddress, 'found')
     addAddress({ ...foundAddress, firstName, lastName });
   };
 
