@@ -25,6 +25,7 @@ function App() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [selectedAddress, setSelectedAddress] = React.useState("");
+  console.log(selectedAddress)
   /**
    * Results states
    */
@@ -66,8 +67,11 @@ function App() {
         .then(result => { return JSON.parse(result) })
         .then(data => {
           let newData = data;
-          setAddresses(newData);
-          console.log(newData)
+
+          let array = [];
+          array.push(newData)
+
+          setAddresses(array);
         })
         .catch(error => setError(error));
     } finally {

@@ -5,7 +5,7 @@ import $ from "./Address.module.css";
 const Address = ({ address }) => {
   return (
     <address className={$.address}>
-      {address.street} {address.houseNumber}, {address.postcode}, {address.city}
+      {address.street} {address.number}, {address.postcode}, {address.city}
     </address>
   );
 };
