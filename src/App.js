@@ -31,6 +31,7 @@ function App() {
    */
   const [error, setError] = React.useState(undefined);
   const [addresses, setAddresses] = React.useState([]);
+  // console.log(addresses)
   /**
    * Redux actions
    */
@@ -47,7 +48,7 @@ function App() {
 
   const handleLastNameChange = (e) => setLastName(e.target.value);
 
-  const handleSelectedAddressChange = (e) => setSelectedAddress(e.target.value);
+  const handleSelectedAddressChange = (e) => { setSelectedAddress(localStorage.getItem(e.target.value)) };
 
   const handleAddressSubmit = async (e) => {
     e.preventDefault();
@@ -67,11 +68,14 @@ function App() {
         .then(result => { return JSON.parse(result) })
         .then(data => {
           let newData = data;
+          var ID = GetNewId()
+          newData.id = ID
 
           let array = [];
           array.push(newData)
 
           setAddresses(array);
+          localStorage.setItem(ID, JSON.stringify(array))
         })
         .catch(error => setError(error));
     } finally {
@@ -103,6 +107,10 @@ function App() {
 
     addAddress({ ...foundAddress, firstName, lastName });
   };
+
+  const GetNewId = () => {
+    return Math.floor(Math.random() * 100)
+  }
 
   return (
     <main>
