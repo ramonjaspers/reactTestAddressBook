@@ -51,6 +51,29 @@ function App() {
   const handleAddressSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer a2cb5ff3-ca75-4616-9783-d1930c7006c0");
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("https://postcode.tech/api/v1/postcode/full?postcode=" + zipCode + "&number=" + houseNumber, requestOptions)
+        .then(response => response.text())
+        .then(result => { return JSON.parse(result) })
+        .then(data => {
+          let newData = data;
+          setAddresses(newData);
+          console.log(newData)
+        })
+        .catch(error => setError(error));
+    } finally {
+
+    }
+
     /** TODO: Fetch addresses based on houseNumber and zipCode
      * - Example URL of API: http://api.postcodedata.nl/v1/postcode/?postcode=1211EP&streetnumber=60&ref=domeinnaam.nl&type=json
      * - Handle errors if they occur
