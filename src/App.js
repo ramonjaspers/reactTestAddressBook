@@ -25,13 +25,11 @@ function App() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [selectedAddress, setSelectedAddress] = React.useState("");
-  console.log(selectedAddress)
   /**
    * Results states
    */
   const [error, setError] = React.useState(undefined);
   const [addresses, setAddresses] = React.useState([]);
-  // console.log(addresses)
   /**
    * Redux actions
    */
@@ -70,6 +68,7 @@ function App() {
           let newData = data;
           var ID = GetNewId()
           newData.id = ID
+          newData.houseNumber = houseNumber
 
           let array = [];
           array.push(newData)
@@ -103,8 +102,6 @@ function App() {
     const foundAddress = addresses.find(
       (address) => address.id === selectedAddress.id
     );
-
-    console.log(foundAddress, 'found')
     addAddress({ ...foundAddress, firstName, lastName });
   };
 
