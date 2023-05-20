@@ -20,8 +20,14 @@
   transform: scale(0.95);
 }
 
-.button.primary {
+.primary {
   background: var(--color-brand);
+  border: none;
+}
+
+.secondary {
+  border: 1px solid var(--color-brand);
+  background: none;
 }
 
 /** TODO: Create separate styles for .primary and .secondary variants of this button:
