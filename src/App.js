@@ -109,6 +109,15 @@ function App() {
     return Math.floor(Math.random() * 100)
   }
 
+  const clearAllFields = () => {
+    setZipCode('');
+    setHouseNumber('');
+    setFirstName('')
+    setLastName('')
+    setSelectedAddress('')
+    setAddresses('')
+  }
+
   return (
     <main>
       <Section>
@@ -185,6 +194,14 @@ function App() {
         {error && <div className="error">{error}</div>}
 
         {/* TODO: Add a button to clear all form fields. Button must look different from the default primary button, see design. */}
+        <Button
+          variant="primary"
+          onClick={() => {
+            clearAllFields()
+          }}
+        >
+          Clear all fields
+        </Button>
       </Section>
 
       <Section variant="dark">

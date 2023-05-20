@@ -27,7 +27,6 @@ const Button = ({
       className={cx($.button, checkClassName())}
       type={type}
       onClick={onClick}
-
     >
       {children}
     </button>
