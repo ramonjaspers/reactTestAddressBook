@@ -9,6 +9,7 @@ import Section from "./ui/components/Section/Section";
 import transformAddress from "./core/models/address";
 import useAddressBook from "./ui/hooks/useAddressBook";
 import Form from "./ui/components/Form/Form";
+import ErrorMessage from "./ui/components/ErrorMessage/ErrorMessage"
 
 import "./App.css";
 
@@ -36,6 +37,11 @@ function App() {
    */
   const { addAddress } = useAddressBook();
 
+
+  const clearAddress = () => {
+    setError('')
+    setAddresses('');
+  }
   /**
    * Text fields onChange handlers
    */
@@ -51,35 +57,32 @@ function App() {
 
   const handleAddressSubmit = async (e) => {
     e.preventDefault();
+    clearAddress()
 
-    try {
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer a2cb5ff3-ca75-4616-9783-d1930c7006c0");
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer a2cb5ff3-ca75-4616-9783-d1930c7006c0");
 
-      const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-      };
+    const requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
 
-      fetch("https://postcode.tech/api/v1/postcode/full?postcode=" + zipCode + "&number=" + houseNumber, requestOptions)
-        .then(response => response.text())
-        .then(result => { return JSON.parse(result) })
-        .then(data => {
-          let newData = data;
-          var ID = GetNewId()
-          newData.id = ID
-          newData.houseNumber = houseNumber
+    const response = await fetch('https://postcode.tech/api/v1/postcode/full?postcode=' + zipCode + "&number=" + houseNumber, requestOptions);
+    const json = await response.text();
+    let data = JSON.parse(json)
 
-          let array = [];
-          array.push(newData)
-
-          setAddresses(array);
-          localStorage.setItem(ID, JSON.stringify(array))
-        })
-        .catch(error => setError(error));
-    } finally {
-
+    if (!data.postcode) {
+      setError(data.message)
+    }
+    else {
+      let array = []
+      array.push(data)
+      var ID = GetNewId()
+      data.id = ID
+      data.houseNumber = data.number
+      setAddresses(array)
+      localStorage.setItem(ID, JSON.stringify(array))
     }
 
     /** TODO: Fetch addresses based on houseNumber and zipCode
@@ -117,6 +120,7 @@ function App() {
     setLastName('')
     setSelectedAddress('')
     setAddresses('')
+    clearAddress()
   }
 
   return (
@@ -184,7 +188,7 @@ function App() {
         )}
 
         {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
-        {error && <div className="error">{error}</div>}
+        {error && <ErrorMessage Error={error} />}
 
         {/* TODO: Add a button to clear all form fields. Button must look different from the default primary button, see design. */}
         <Button
