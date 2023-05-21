@@ -22,8 +22,20 @@ function App() {
    * - Remove all individual React.useState
    * - Remove all individual onChange handlers, like handleZipCodeChange for example
    */
-  const [zipCode, setZipCode] = React.useState("");
-  const [houseNumber, setHouseNumber] = React.useState("");
+
+  const [stateAddress, setStateAddress] = React.useState({
+    zipCode: "",
+    houseNumber: "",
+  })
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setStateAddress({
+      ...stateAddress,
+      [e.target.name]: value
+    });
+  }
+
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [selectedAddress, setSelectedAddress] = React.useState("");
@@ -45,15 +57,12 @@ function App() {
   /**
    * Text fields onChange handlers
    */
-  const handleZipCodeChange = (e) => setZipCode(e.target.value);
-
-  const handleHouseNumberChange = (e) => setHouseNumber(e.target.value);
 
   const handleFirstNameChange = (e) => setFirstName(e.target.value);
 
   const handleLastNameChange = (e) => setLastName(e.target.value);
 
-  const handleSelectedAddressChange = (e) => { setSelectedAddress(JSON.parse(localStorage.getItem(e.target.value))[0]) };
+  const handleSelectedAddressChange = (e) => { setSelectedAddress(JSON.parse(localStorage.getItem(e.target.value))) };
 
   const handleAddressSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +77,7 @@ function App() {
       redirect: 'follow'
     };
 
-    const response = await fetch('https://postcode.tech/api/v1/postcode/full?postcode=' + zipCode + "&number=" + houseNumber, requestOptions);
+    const response = await fetch('https://postcode.tech/api/v1/postcode/full?postcode=' + stateAddress.zipCode + "&number=" + stateAddress.houseNumber, requestOptions);
     const json = await response.text();
     let data = JSON.parse(json)
 
@@ -77,12 +86,14 @@ function App() {
     }
     else {
       let array = []
-      array.push(data)
-      var ID = GetNewId()
-      data.id = ID
+
       data.houseNumber = data.number
+
+      const dataAddress = transformAddress(data)
+      array.push(dataAddress)
       setAddresses(array)
-      localStorage.setItem(ID, JSON.stringify(array))
+
+      localStorage.setItem(dataAddress.id, JSON.stringify(dataAddress))
     }
 
     /** TODO: Fetch addresses based on houseNumber and zipCode
@@ -103,23 +114,19 @@ function App() {
       );
       return;
     }
+
     const foundAddress = addresses.find(
       (address) => address.id === selectedAddress.id
     );
+
     addAddress({ ...foundAddress, firstName, lastName });
   };
 
-  const GetNewId = () => {
-    return Math.floor(Math.random() * 100)
-  }
-
   const clearAllFields = () => {
-    setZipCode('');
-    setHouseNumber('');
+    setStateAddress({ zipCode: '', houseNumber: '' })
     setFirstName('')
     setLastName('')
     setSelectedAddress('')
-    setAddresses('')
     clearAddress()
   }
 
@@ -138,16 +145,16 @@ function App() {
           <div className="form-row">
             <InputText
               name="zipCode"
-              onChange={handleZipCodeChange}
+              onChange={handleChange}
               placeholder="Zip Code"
-              value={zipCode}
+              value={stateAddress.zipCode}
             />
           </div>
           <div className="form-row">
             <InputText
               name="houseNumber"
-              onChange={handleHouseNumberChange}
-              value={houseNumber}
+              onChange={handleChange}
+              value={stateAddress.houseNumber}
               placeholder="House number"
             />
           </div>
