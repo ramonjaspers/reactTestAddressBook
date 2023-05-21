@@ -30,6 +30,12 @@
   background: none;
 }
 
+.outline {
+  border: 1px solid var(--color-brand);
+  background: none;
+  color: var(--color-brand);
+}
+
 /** TODO: Create separate styles for .primary and .secondary variants of this button:
 * - Must use the CSS variables declared in App.css
 */

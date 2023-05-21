@@ -195,7 +195,7 @@ function App() {
 
         {/* TODO: Add a button to clear all form fields. Button must look different from the default primary button, see design. */}
         <Button
-          variant="primary"
+          variant="outline"
           onClick={() => {
             clearAllFields()
           }}

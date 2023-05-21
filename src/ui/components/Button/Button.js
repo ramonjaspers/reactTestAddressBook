@@ -16,6 +16,8 @@ const Button = ({
       return $.primary
     else if (variant === 'secondary')
       return $.secondary
+    else if (variant === 'outline')
+      return $.outline
   }
 
   return (
