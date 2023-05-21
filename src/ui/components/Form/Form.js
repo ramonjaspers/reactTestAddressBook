@@ -1,5 +1,4 @@
 import React from "react";
-import cx from "classnames";
 
 import $ from "./Form.module.css";
 import Button from "../Button/Button";
@@ -16,9 +15,7 @@ const Form = ({
         <form onSubmit={onSubmit}>
             <fieldset>
                 <legend>✏️ {legend}</legend>
-                <div className={$.formRow}>
-                    {children}
-                </div>
+                {children}
                 <Button type="submit">{button}</Button>
             </fieldset>
         </form>

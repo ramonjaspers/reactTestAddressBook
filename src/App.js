@@ -131,18 +131,22 @@ function App() {
         </h1>
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
         <Form onSubmit={handleAddressSubmit} legend="🏠 Find an address" button="Find">
-          <InputText
-            name="zipCode"
-            onChange={handleZipCodeChange}
-            placeholder="Zip Code"
-            value={zipCode}
-          />
-          <InputText
-            name="houseNumber"
-            onChange={handleHouseNumberChange}
-            value={houseNumber}
-            placeholder="House number"
-          />
+          <div className="form-row">
+            <InputText
+              name="zipCode"
+              onChange={handleZipCodeChange}
+              placeholder="Zip Code"
+              value={zipCode}
+            />
+          </div>
+          <div className="form-row">
+            <InputText
+              name="houseNumber"
+              onChange={handleHouseNumberChange}
+              value={houseNumber}
+              placeholder="House number"
+            />
+          </div>
         </Form>
         {addresses.length > 0 &&
           addresses.map((address) => {
@@ -160,18 +164,22 @@ function App() {
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
         {selectedAddress && (
           <Form onSubmit={handlePersonSubmit} legend="Add personal info to address" button="Add to addressbook">
-            <InputText
-              name="firstName"
-              placeholder="First name"
-              onChange={handleFirstNameChange}
-              value={firstName}
-            />
-            <InputText
-              name="lastName"
-              placeholder="Last name"
-              onChange={handleLastNameChange}
-              value={lastName}
-            />
+            <div className="form-row">
+              <InputText
+                name="firstName"
+                placeholder="First name"
+                onChange={handleFirstNameChange}
+                value={firstName}
+              />
+            </div>
+            <div className="form-row">
+              <InputText
+                name="lastName"
+                placeholder="Last name"
+                onChange={handleLastNameChange}
+                value={lastName}
+              />
+            </div>
           </Form>
         )}
 
