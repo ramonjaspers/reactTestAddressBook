@@ -8,6 +8,7 @@ import Radio from "./ui/components/Radio/Radio";
 import Section from "./ui/components/Section/Section";
 import transformAddress from "./core/models/address";
 import useAddressBook from "./ui/hooks/useAddressBook";
+import Form from "./ui/components/Form/Form";
 
 import "./App.css";
 
@@ -129,28 +130,20 @@ function App() {
           </small>
         </h1>
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
-        <form onSubmit={handleAddressSubmit}>
-          <fieldset>
-            <legend>🏠 Find an address</legend>
-            <div className="form-row">
-              <InputText
-                name="zipCode"
-                onChange={handleZipCodeChange}
-                placeholder="Zip Code"
-                value={zipCode}
-              />
-            </div>
-            <div className="form-row">
-              <InputText
-                name="houseNumber"
-                onChange={handleHouseNumberChange}
-                value={houseNumber}
-                placeholder="House number"
-              />
-            </div>
-            <Button type="submit">Find</Button>
-          </fieldset>
-        </form>
+        <Form onSubmit={handleAddressSubmit} legend="🏠 Find an address" button="Find">
+          <InputText
+            name="zipCode"
+            onChange={handleZipCodeChange}
+            placeholder="Zip Code"
+            value={zipCode}
+          />
+          <InputText
+            name="houseNumber"
+            onChange={handleHouseNumberChange}
+            value={houseNumber}
+            placeholder="House number"
+          />
+        </Form>
         {addresses.length > 0 &&
           addresses.map((address) => {
             return (
@@ -166,28 +159,20 @@ function App() {
           })}
         {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
         {selectedAddress && (
-          <form onSubmit={handlePersonSubmit}>
-            <fieldset>
-              <legend>✏️ Add personal info to address</legend>
-              <div className="form-row">
-                <InputText
-                  name="firstName"
-                  placeholder="First name"
-                  onChange={handleFirstNameChange}
-                  value={firstName}
-                />
-              </div>
-              <div className="form-row">
-                <InputText
-                  name="lastName"
-                  placeholder="Last name"
-                  onChange={handleLastNameChange}
-                  value={lastName}
-                />
-              </div>
-              <Button type="submit">Add to addressbook</Button>
-            </fieldset>
-          </form>
+          <Form onSubmit={handlePersonSubmit} legend="Add personal info to address" button="Add to addressbook">
+            <InputText
+              name="firstName"
+              placeholder="First name"
+              onChange={handleFirstNameChange}
+              value={firstName}
+            />
+            <InputText
+              name="lastName"
+              placeholder="Last name"
+              onChange={handleLastNameChange}
+              value={lastName}
+            />
+          </Form>
         )}
 
         {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}

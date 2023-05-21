@@ -2,23 +2,25 @@ import React from "react";
 import cx from "classnames";
 
 import $ from "./Form.module.css";
+import Button from "../Button/Button";
 
 
 const Form = ({
-
+    onSubmit,
+    children,
+    legend,
+    button
 }) => {
 
     return (
-        <form
-            // TODO: Add conditional classNames
-            // - Must have a condition to set the '.primary' className
-            // - Must have a condition to set the '.secondary' className
-            variant={variant}
-            className={cx($.button, checkClassName())}
-            type={type}
-            onClick={onClick}
-        >
-            {children}
+        <form onSubmit={onSubmit}>
+            <fieldset>
+                <legend>✏️ {legend}</legend>
+                <div className={$.formRow}>
+                    {children}
+                </div>
+                <Button type="submit">{button}</Button>
+            </fieldset>
         </form>
     );
 };

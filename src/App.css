@@ -44,7 +44,7 @@ small {
   color: var(--color-text-light);
 }
 
-fieldset {
+/* fieldset {
   border: none;
   border-bottom: 1px solid var(--color-accent);
   border-top: 1px solid var(--color-accent);
@@ -56,13 +56,13 @@ fieldset {
 
 legend {
   color: var(--color-text-light);
-}
+} */
 
 .error {
   color: red;
   padding: 0.5em 0;
 }
 
-.form-row {
+/* .form-row {
   margin-bottom: 0.5em;
-}
+} */
