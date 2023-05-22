@@ -62,7 +62,10 @@ function App() {
 
   const handleLastNameChange = (e) => setLastName(e.target.value);
 
-  const handleSelectedAddressChange = (e) => { setSelectedAddress(JSON.parse(localStorage.getItem(e.target.value))) };
+  const handleSelectedAddressChange = () => {
+    let addressSelected = addresses.reduce((obj, item) => ({ ...obj, [item.key]: item.value }));
+    setSelectedAddress(addressSelected)
+  };
 
   const handleAddressSubmit = async (e) => {
     e.preventDefault();
@@ -86,14 +89,11 @@ function App() {
     }
     else {
       let array = []
-
       data.houseNumber = data.number
 
       const dataAddress = transformAddress(data)
       array.push(dataAddress)
       setAddresses(array)
-
-      localStorage.setItem(dataAddress.id, JSON.stringify(dataAddress))
     }
 
     /** TODO: Fetch addresses based on houseNumber and zipCode

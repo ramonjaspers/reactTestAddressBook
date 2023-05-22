@@ -11,7 +11,3 @@ fieldset {
 legend {
     color: var(--color-text-light);
 }
-
-.formRow {
-    margin-bottom: 0.5em;
-}
