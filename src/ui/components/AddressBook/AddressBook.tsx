@@ -6,34 +6,35 @@ import Button from "../Button/Button";
 import Card from "../Card/Card";
 import useAddressBook from "../../hooks/useAddressBook";
 
-import $ from "./AddressBook.module.css";
+import styles from "./AddressBook.module.css";
 
 const AddressBook = () => {
-  const addresses = useSelector((state) => state.addressBook.addresses);
+  const addresses = useSelector((state: any) => state.addressBook.addresses);
   const { removeAddress, loadSavedAddresses, loading } = useAddressBook();
 
   React.useEffect(() => {
     loadSavedAddresses();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <section className={$.addressBook}>
+    <section className={styles.addressBook}>
       <h2>📓 Address book ({addresses.length})</h2>
       {!loading && (
         <>
           {addresses.length === 0 && <p>No addresses found, try add one 😉</p>}
-          {addresses.map((address) => {
+          {/* Yikes, we do not like any types. Remove these as much as you can the less the better! */}
+          {addresses.map((address: any) => {
             return (
+              /** TS: This doesnt look good, something doesn't seem right! */
               <Card key={address.id}>
-                <div className={$.item}>
+                <div className={styles.item}>
                   <div>
                     <h3>
                       {address.firstName} {address.lastName}
                     </h3>
                     <Address address={address} />
                   </div>
-                  <div className={$.remove}>
+                  <div className={styles.remove}>
                     <Button
                       variant="secondary"
                       onClick={() => removeAddress(address.id)}
@@ -51,4 +52,4 @@ const AddressBook = () => {
   );
 };
 
-export default AddressBook;
+export default AddressBook; 

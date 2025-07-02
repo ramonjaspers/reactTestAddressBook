@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "typeRoots": ["./node_modules/@types", "./src/types/*"],
+    "types": ["jest", "react", "react-dom"],
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "components/*": ["./src/ui/components/*"],
+      "hooks/*": ["./src/ui/hooks/*"],
+      "models/*": ["./src/core/models/*"],
+      "services/*": ["./src/core/services/*"],
+      "reducers/*": ["./src/core/reducers/*"],
+      "src/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "exclude": ["./_dist"]
+}

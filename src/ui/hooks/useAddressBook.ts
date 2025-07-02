@@ -1,8 +1,10 @@
-import React from "react";
+
 import { useDispatch, useStore } from "react-redux";
 
 import transformAddress from "../../core/models/address";
 import databaseService from "../../core/services/databaseService";
+import { addAddress as addAddressAction, removeAddress as removeAddressAction, addAddresses as addAddressesAction } from "../../core/reducers/addressBook";
+import React from 'react';
 
 export default function useAddressBook() {
   const dispatch = useDispatch();
@@ -16,13 +18,13 @@ export default function useAddressBook() {
 
   return {
     /** Add address to the redux store */
-    addAddress: (address) => {
-      dispatch({ type: "address/add", payload: address });
+    addAddress: (address: any) => {
+      dispatch(addAddressAction(address));
       updateDatabase();
     },
     /** Remove address by ID from the redux store */
-    removeAddress: (id) => {
-      dispatch({ type: "address/remove", payload: id });
+    removeAddress: (id: any) => {
+      dispatch(removeAddressAction(id));
       updateDatabase();
     },
     /** Loads saved addresses from the indexedDB */
@@ -33,10 +35,9 @@ export default function useAddressBook() {
         setLoading(false);
         return;
       }
-      dispatch({
-        type: "addresses/add",
-        payload: saved.map((address) => transformAddress(address)),
-      });
+      dispatch(
+        addAddressesAction(saved.map((address) => transformAddress(address)))
+      );
       setLoading(false);
     },
     loading,

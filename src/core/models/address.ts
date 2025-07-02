@@ -1,6 +1,8 @@
-export default function transformAddress(data) {
+
+export default function transformAddress(data: any): any {
   const { firstName, lastName, city, houseNumber, lat, lon, postcode, street } =
-    data;
+    data as any[any];
+
   return {
     city: city || "",
     firstName: firstName || "",
@@ -9,5 +11,5 @@ export default function transformAddress(data) {
     lastName: lastName || "",
     postcode: postcode || "",
     street: street || "",
-  };
-}
+  } as any[any];
+} 
