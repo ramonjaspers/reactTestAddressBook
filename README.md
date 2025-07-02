@@ -7,14 +7,14 @@ Try to finish as much TODO's as possible. This test is meant to give us insight 
 When you view the `/src` folder you will find an application for users that want to create their own addressbook (also shown in the video above). But as mentioned before there are some TODO's to be completed in order to make the application work as expected.
 
 In order to start this assignment you need to:
-- ⬇️ Clone this repository
+- ⬇️ Clone or fork this repository
 - 🌲 Create a separate branch called `feat/todo-assignment`
-- 👨‍💻 Open up your preferred editor (mine is VS Code or Intellij Ultimate)
+- 👨‍💻 Open up your preferred editor (mine is VS Code)
 - 🏗️ install the deps using your fav package manager
 - 🏃🏻 Run the app using your fav bundler
-- 🔎  Search for all `TODO:` strings within the `/src` folder and start building!
+- 🔎 Implement the TODO's and resolve the erros and warnings in the project!
 
-> Note: You will find some Bonus TODO's. These are not mandatory for completing this assignment. Feel free to flex your programming skills 💪
+> Note: This test is developed for FM Group and should take about 4 hours, quality is more important than quantity.
 
 ## TODO's 
 Here is a list of all the TODO's to make life a bit easier:
@@ -22,7 +22,7 @@ Here is a list of all the TODO's to make life a bit easier:
 ### TS
 - [ ] There are some errors in the TS implementation, fix these errors to get the project running flawless.
 - [ ] Resolve all warnings.
-- [ ] Improve typescript usage and Minimize, do minimize any usage.
+- [ ] Improve typescript usage, do minimize any usage.
 
 ### Styling
 - [ ] Add the 'Roboto' font from Google fonts and add it as a global CSS var called `--font-primary`.
@@ -44,7 +44,7 @@ Here is a list of all the TODO's to make life a bit easier:
 ## Submitting assignment
 You can submit your assignment by creating a merge request for your `feat/todo-assignment` branch. That's it, good luck! 🚀
 
-> If any questions might arise about the assignment please contact rjaspers@fmgroup.fm
+> If any questions or remaks arise about the assignment please contact rjaspers@fmgroup.fm or the person you got this test from.
 
 ### Author
 Created and designed by Levi Zimmerman from Triple
