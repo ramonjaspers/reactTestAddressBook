@@ -22,10 +22,8 @@ const AddressBook = () => {
       {!loading && (
         <>
           {addresses.length === 0 && <p>No addresses found, try add one 😉</p>}
-          {/* Yikes, we do not like any types. Remove these as much as you can the less the better! */}
           {addresses.map((address: any) => {
             return (
-              /** TS: This doesnt look good, something doesn't seem right! */
               <Card key={address.id}>
                 <div className={styles.item}>
                   <div>
@@ -52,4 +50,4 @@ const AddressBook = () => {
   );
 };
 
-export default AddressBook; 
+export default AddressBook;

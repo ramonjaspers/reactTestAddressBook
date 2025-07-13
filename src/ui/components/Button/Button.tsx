@@ -13,10 +13,10 @@ export interface ButtonProps {
 const Button = ({ children, onClick, type = "button", variant = "primary" }: ButtonProps) => {
   return (
     <button
-      // TODO: Add conditional classNames
-      // - Must have a condition to set the '.primary' className
-      // - Must have a condition to set the '.secondary' className
-      className={styles.button}
+      className={cx(styles.button, {
+        [styles.primary]: variant === "primary",
+        [styles.secondary]: variant === "secondary"
+      })}
       type={type}
       onClick={onClick}
     >
@@ -25,4 +25,4 @@ const Button = ({ children, onClick, type = "button", variant = "primary" }: But
   );
 };
 
-export default Button; 
+export default Button;

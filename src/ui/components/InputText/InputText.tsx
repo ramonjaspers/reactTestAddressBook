@@ -4,7 +4,7 @@ import styles from "./InputText.module.css";
 
 export interface InputTextProps {
   name?: string;
-  onChange: boolean;
+  onChange: any;
   placeholder?: string;
   value?: string;
 }
@@ -22,4 +22,4 @@ const InputText = ({ name, onChange, placeholder, value }: InputTextProps) => {
   );
 };
 
-export default InputText; 
+export default InputText;
