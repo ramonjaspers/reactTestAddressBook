@@ -4,7 +4,8 @@ import styles from "./InputText.module.css";
 
 export interface InputTextProps {
   name?: string;
-  onChange: boolean;
+
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   value?: string;
 }

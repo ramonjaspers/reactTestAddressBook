@@ -9,7 +9,7 @@
     "strict": true,
     "strictNullChecks": true,
     "typeRoots": ["./node_modules/@types", "./src/types/*"],
-    "types": ["jest", "react", "react-dom"],
+    "types": ["jest", "react", "react-dom", "node"],
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
