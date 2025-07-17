@@ -10,6 +10,9 @@
   --font-primary: "Roboto", sans-serif;
   --color-accent: #cacfdd;
   --color-background: #fff;
+  --color-error-background: #f8d7da;
+  --color-error-text: #dc3545;
+  --color-error-border: #f5c6cb;
   --color-border: #bbb;
   --color-brand: #413ef7;
   --color-text: #141925;
