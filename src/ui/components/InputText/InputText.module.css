@@ -12,6 +12,6 @@
 @media (max-width: 480px) {
   .inputText {
     padding: 0.85em;
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: 16px;
   }
 }

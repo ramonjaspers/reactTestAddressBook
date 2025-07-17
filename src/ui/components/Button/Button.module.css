@@ -10,10 +10,9 @@
   margin: 0.5em 0;
   transition: transform 0.1s ease;
   width: 100%;
-  min-height: 44px; /* Better touch target */
+  min-height: 44px;
 }
 
-/* Only apply hover effects on devices that support hover */
 @media (hover: hover) {
   .button:hover {
     transform: scale(1.05);
@@ -29,7 +28,6 @@
   outline-offset: 2px;
 }
 
-/* Responsive button sizing */
 @media (max-width: 480px) {
   .button {
     padding: 0.85em 1em;
