@@ -22,3 +22,29 @@
 .item h3 {
   margin: 0 0 0.5em;
 }
+
+@media (max-width: 768px) {
+  .item {
+    gap: 0.75rem;
+  }
+  
+  .item address {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .remove {
+    margin-left: 0;
+  }
+  
+  .item address {
+    font-size: 0.75em;
+  }
+}

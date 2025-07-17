@@ -1,13 +1,11 @@
-import React from "react";
+import { PropsWithChildren } from "react";
 
 import styles from "./Card.module.css";
 
-export interface CardProps {
-  children: string;
-}
+interface CardProps extends PropsWithChildren {}
 
 const Card = ({ children }: CardProps) => {
   return <div className={styles.card}>{children}</div>;
 };
 
-export default Card; 
+export default Card;
