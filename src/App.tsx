@@ -1,60 +1,127 @@
-import React from "react";
+import { FormEvent, useState } from "react";
 
-import Address from "./ui/components/Address/Address";
+import Address, { type AddressType } from "./ui/components/Address/Address";
 import AddressBook from "./ui/components/AddressBook/AddressBook";
 import Button from "./ui/components/Button/Button";
+import ErrorMessage from "./ui/components/ErrorMessage/ErrorMessage";
+import Form from "./ui/components/Form/Form";
 import InputText from "./ui/components/InputText/InputText";
 import Radio from "./ui/components/Radio/Radio";
 import Section from "./ui/components/Section/Section";
-import transformAddress from "./core/models/address";
+import { AddressApiResponseSchema } from "./core/models/address";
 import useAddressBook from "./ui/hooks/useAddressBook";
+import { useFormFields } from "./ui/hooks/useFormFields";
 
 import "./App.css";
+import { useMutation } from "@tanstack/react-query";
 
 function App() {
-  /**
-   * Form fields states
-   * TODO: Write a custom hook to set form fields in a more generic way:
-   * - Hook must expose an onChange handler to be used by all <InputText /> and <Radio /> components
-   * - Hook must expose all text form field values, like so: { zipCode: '', houseNumber: '', ...etc }
-   * - Remove all individual React.useState
-   * - Remove all individual onChange handlers, like handleZipCodeChange for example
-   */
-  const [zipCode, setZipCode] = React.useState("");
-  const [houseNumber, setHouseNumber] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [selectedAddress, setSelectedAddress] = React.useState("");
-  const [error, setError] = React.useState(undefined);
-  const [addresses, setAddresses] = React.useState<any[]>([]);
+  const [addresses, setAddresses] = useState<AddressType[]>([]);
 
   const { addAddress } = useAddressBook();
 
-  const handleZipCodeChange = (e: any) => setZipCode(e.target.value);
-  const handleHouseNumberChange = (e: any) => setHouseNumber(e.target.value);
-  const handleFirstNameChange = (e: any) => setFirstName(e.target.value);
-  const handleLastNameChange = (e: any) => setLastName(e.target.value);
-  const handleSelectedAddressChange = (e: any) => setSelectedAddress(e.target.value);
+  const {
+    values: formFields,
+    error: formError,
+    handleChange,
+    reset,
+    setFormError,
+  } = useFormFields({
+    firstName: "",
+    lastName: "",
+    selectedAddress: "",
+    zipCode: "",
+    houseNumber: "",
+  });
 
-  const handleAddressSubmit = async (e: any) => {
+  const {
+    mutate: fetchAddresses,
+    isPending,
+    error: apiError,
+  } = useMutation({
+    mutationFn: async ({
+      zipCode,
+      houseNumber,
+    }: {
+      zipCode: string;
+      houseNumber: string;
+    }) => {
+      setAddresses([]);
+
+      const corsProxy = "https://corsproxy.io/?";
+      const apiUrl = `http://api.postcodedata.nl/v1/postcode/?postcode=${zipCode}&streetnumber=${houseNumber}&ref=domeinnaam.nl&type=json&userip=123.123.123.123`;
+
+      const response = await fetch(corsProxy + encodeURIComponent(apiUrl), {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return AddressApiResponseSchema.parse({
+        ...data,
+        houseNumber: houseNumber,
+      });
+    },
+    onSuccess: (data) => {
+      setAddresses(data);
+
+      setFormError(undefined);
+    },
+    onError: () => {
+      setFormError(
+        "Failed to fetch addresses. Please try again or check your input."
+      );
+    },
+  });
+
+  const handleAddressSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    /** TODO: Fetch addresses based on houseNumber and zipCode
-     * - Example URL of API: http://api.postcodedata.nl/v1/postcode/?postcode=1211EP&streetnumber=60&ref=domeinnaam.nl&type=json
-     * - Handle errors if they occur
-     * - Handle successful response by updating the `addresses` in the state using `setAddresses`
-     * - Make sure to add the houseNumber to each found address in the response using `transformAddress()` function
-     * - Bonus: Add a loading state in the UI while fetching addresses
-     */  };
+    if (formFields.zipCode && formFields.houseNumber) {
+      fetchAddresses({
+        zipCode: formFields.zipCode,
+        houseNumber: formFields.houseNumber,
+      });
+    }
+  };
 
-  const handlePersonSubmit = (e: any) => {
+  const handlePersonSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!selectedAddress || !addresses.length) {
-      setError("No address selected, try to select an address or find one if you haven't");
+
+    if (!formFields.selectedAddress || !addresses?.length) {
+      setFormError(
+        "No address selected, try to select an address or find one if you haven't"
+      );
       return;
     }
-    const foundAddress = addresses.find((address) => address.id === selectedAddress);
-    addAddress({ ...foundAddress, firstName, lastName });
+
+    const foundAddress = addresses.find(
+      (address) => address.id === formFields.selectedAddress
+    );
+
+    if (foundAddress) {
+      const result = addAddress({
+        ...foundAddress,
+        firstName: formFields.firstName,
+        lastName: formFields.lastName,
+      });
+
+      if (!result.success) {
+        setFormError("This address is already in your address book!");
+
+        return;
+      }
+
+      reset();
+      setAddresses([]);
+      setFormError(undefined);
+    }
   };
 
   return (
@@ -63,48 +130,80 @@ function App() {
         <h1>
           Create your own address book!
           <br />
-          <small>Enter an address by zipcode add personal info and done! 👏</small>
+          <small>
+            Enter an address by zipcode add personal info and done! 👏
+          </small>
         </h1>
-        {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
 
-        <form onSubmit={handleAddressSubmit}>
-          <fieldset>
-            <legend>🏠 Find an address</legend>
-            <div className="form-row">
-              <InputText name="zipCode" onChange={handleZipCodeChange} placeholder="Zip Code" value={zipCode} />
-            </div>
-            <div className="form-row">
-              <InputText name="houseNumber" onChange={handleHouseNumberChange} value={houseNumber} placeholder="House number" />
-            </div>
-            <Button type="submit">Find</Button>
-          </fieldset>
-        </form>
-        {addresses.length > 0 &&
+        <Form
+          onSubmit={handleAddressSubmit}
+          legend="🏠 Find an address"
+          submitText="Find"
+          isSubmitting={isPending}
+        >
+          <InputText
+            name="zipCode"
+            placeholder="Zip Code"
+            value={formFields.zipCode}
+            onChange={handleChange("zipCode")}
+          />
+
+          <InputText
+            name="houseNumber"
+            placeholder="House number"
+            value={formFields.houseNumber}
+            onChange={handleChange("houseNumber")}
+          />
+        </Form>
+
+        {addresses &&
+          addresses.length > 0 &&
           addresses.map((address) => (
-            <Radio name="selectedAddress" id={address.id} key={address.id} onChange={handleSelectedAddressChange}>
+            <Radio
+              name="selectedAddress"
+              id={address.id}
+              key={address.id}
+              onChange={handleChange("selectedAddress")}
+            >
               <Address address={address} />
             </Radio>
           ))}
-        {/* TODO: Create generic <Form /> component to display form rows, legend and a submit button  */}
-        {selectedAddress && (
-          <form onSubmit={handlePersonSubmit}>
-            <fieldset>
-              <legend>✏️ Add personal info to address</legend>
-              <div className="form-row">
-                <InputText name="firstName" placeholder="First name" onChange={handleFirstNameChange} value={firstName} />
-              </div>
-              <div className="form-row">
-                <InputText name="lastName" placeholder="Last name" onChange={handleLastNameChange} value={lastName} />
-              </div>
-              <Button type="submit">Add to addressbook</Button>
-            </fieldset>
-          </form>
+
+        {formFields.selectedAddress && (
+          <Form
+            onSubmit={handlePersonSubmit}
+            legend="✏️ Add personal info to address"
+            submitText="Add to addressbook"
+          >
+            <InputText
+              name="firstName"
+              placeholder="First name"
+              value={formFields.firstName}
+              onChange={handleChange("firstName")}
+            />
+
+            <InputText
+              name="lastName"
+              placeholder="Last name"
+              value={formFields.lastName}
+              onChange={handleChange("lastName")}
+            />
+          </Form>
         )}
-        {/* TODO: Create an <ErrorMessage /> component for displaying an error message */}
-        {error && <div className="error">{error}</div>}
+
+        <ErrorMessage>{formError || apiError?.message}</ErrorMessage>
+
+        <Button
+          onClick={() => {
+            reset();
+            setAddresses([]);
+          }}
+          variant="secondary"
+        >
+          Clear all fields
+        </Button>
       </Section>
 
-      {/* TODO: Add a button to clear all form fields. Button must look different from the default primary button, see design. */}
       <Section variant="dark">
         <AddressBook />
       </Section>
@@ -112,4 +211,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
