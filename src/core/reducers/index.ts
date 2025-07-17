@@ -1,6 +1,9 @@
 import { configureStore as rtkConfigureStore } from "@reduxjs/toolkit";
+import { enableMapSet } from "immer";
 
 import addressBookReducer from "./addressBook";
+
+enableMapSet();
 
 export const store = rtkConfigureStore({
   reducer: {

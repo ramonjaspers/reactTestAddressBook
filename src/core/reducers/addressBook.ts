@@ -1,33 +1,39 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AddressType } from "components/Address/Address";
+import { RootState } from "./index";
 
-export interface AddressBookState {
-  addresses: any[];
+interface AddressBookState {
+  addresses: AddressType[];
 }
 
 const initialState: AddressBookState = {
   addresses: [],
 };
 
+
 const addressBookSlice = createSlice({
   name: "addressBook",
   initialState,
   reducers: {
-    /** TODO: Prevent duplicate addresses */
-    addAddress(state: AddressBookState, action: PayloadAction<any>) {
-      state.addresses.push(action.payload);
+    addAddress(state, { payload }: PayloadAction<AddressType>) {
+      const hasId = state.addresses.some(a => a.id === payload.id);
+      if (hasId) return;
+      
+      state.addresses.push(payload);
     },
-    /** TODO: Write a state update which removes an address from the addresses array. */
-    removeAddress(state: AddressBookState, action: PayloadAction<any>) {
-      state.addresses = state.addresses.filter(
-        (addr: any) => addr.id !== action.payload
-      );
+
+    removeAddress(state, { payload }: PayloadAction<string>) {
+      state.addresses = state.addresses.filter(a => a.id !== payload);
     },
-    addAddresses(state: AddressBookState, action: PayloadAction<any[]>) {
-      state.addresses = action.payload;
+
+    loadAddresses(state, { payload }: PayloadAction<AddressType[]>) {
+      state.addresses = payload;
     },
   },
 });
 
-export const { addAddress, removeAddress, addAddresses } = addressBookSlice.actions;
+export const selectAllAddresses = (state: RootState) => state.addressBook.addresses;
+
+export const { addAddress, removeAddress, loadAddresses } = addressBookSlice.actions;
 
 export default addressBookSlice.reducer;
