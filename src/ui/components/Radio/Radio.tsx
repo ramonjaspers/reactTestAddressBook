@@ -1,19 +1,24 @@
-import React from "react";
+import { InputHTMLAttributes, PropsWithChildren } from "react";
 
 import styles from "./Radio.module.css";
 
-export interface RadioProps {
-  children: React.ReactNode;
-  id: string;
-  name: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-}
+interface RadioProps
+  extends PropsWithChildren,
+    InputHTMLAttributes<HTMLInputElement> {}
 
-const Radio = ({ children, id, name, onChange }: RadioProps) => (
-  <div className={styles.radio}>
-    <input type="radio" id={id} name={name} onChange={onChange} value={id} />
-    <label htmlFor={id}>{children}</label>
-  </div>
+const Radio = ({ children, id, name, onChange, ...props }: RadioProps) => (
+  <label htmlFor={id} className={styles.radio}>
+    <input
+      type="radio"
+      id={id}
+      name={name}
+      onChange={onChange}
+      value={id}
+      {...props}
+    />
+
+    {children}
+  </label>
 );
 
-export default Radio; 
+export default Radio;

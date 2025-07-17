@@ -1,9 +1,17 @@
-import React from "react";
+import styles from "./Address.module.css";
 
-import styles from './Address.module.css'
+export type AddressType = {
+  city: string;
+  firstName: string;
+  houseNumber: string;
+  id: string;
+  lastName: string;
+  postcode: string;
+  street: string;
+};
 
-export interface AddressProps {
-  address: any;
+interface AddressProps {
+  address: AddressType;
 }
 
 const Address = ({ address }: AddressProps) => (

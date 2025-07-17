@@ -9,12 +9,32 @@
   max-width: var(--width-input);
   padding: 1em;
   width: 100%;
+  min-height: 44px;
+  font-style: italic;
 }
 
-.radio:hover {
+@media (hover: hover) {
+  .radio:hover {
+    background: var(--color-accent);
+  }
+}
+
+.radio:focus-within {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
   background: var(--color-accent);
 }
 
 .radio input[type="radio"] {
   margin: 0;
+  outline: none;
+  min-width: 20px;
+  min-height: 20px;
+}
+
+@media (max-width: 480px) {
+  .radio {
+    padding: 1.25em;
+    gap: 0.75rem;
+  }
 }

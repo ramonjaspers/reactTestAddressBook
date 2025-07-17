@@ -1,25 +1,11 @@
-import React from "react";
+import { InputHTMLAttributes } from "react";
 
 import styles from "./InputText.module.css";
 
-export interface InputTextProps {
-  name?: string;
-  onChange: boolean;
-  placeholder?: string;
-  value?: string;
-}
+interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-const InputText = ({ name, onChange, placeholder, value }: InputTextProps) => {
-  return (
-    <input
-      className={styles.inputText}
-      name={name}
-      onChange={onChange}
-      placeholder={placeholder}
-      type="text"
-      value={value}
-    />
-  );
+const InputText = ({ ...props }: InputTextProps) => {
+  return <input className={styles.inputText} type="text" {...props} />;
 };
 
-export default InputText; 
+export default InputText;

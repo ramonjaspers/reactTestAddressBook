@@ -1,11 +1,10 @@
-import React from "react";
+import { PropsWithChildren } from "react";
 import cx from "classnames";
 
 import styles from "./Section.module.css";
 
-export interface SectionProps {
-  children: React.ReactNode;
-  variant?: string; // light or dark
+interface SectionProps extends PropsWithChildren {
+  variant?: "light" | "dark";
 }
 
 const Section = ({ children, variant = "light" }: SectionProps) => (
@@ -19,4 +18,4 @@ const Section = ({ children, variant = "light" }: SectionProps) => (
   </section>
 );
 
-export default Section; 
+export default Section;
